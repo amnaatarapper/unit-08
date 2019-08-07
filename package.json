@@ -1,0 +1,28 @@
+{
+  "name": "sql_library_manager",
+  "version": "0.0.1",
+  "description": "techdegree unit-08 project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amnaatarapper/unit-08.git"
+  },
+  "author": "AIT BAZIZ Oussama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amnaatarapper/unit-08/issues"
+  },
+  "homepage": "https://github.com/amnaatarapper/unit-08#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^2.0.4",
+    "sequelize": "^5.12.3",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

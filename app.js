@@ -83,7 +83,7 @@ app.post('/books/new', async (req, res) => {
     }
   }
 
-  res.render('book_detail', { bookById });
+  res.redirect('/books');
 
 
 });
@@ -188,7 +188,6 @@ app.post('/books/:id/delete', async (req, res) => {
 db.sequelize.sync().then(() => {
   app.listen(3000, () => console.log("Running on port 3000"));
 });
-
 
 
 

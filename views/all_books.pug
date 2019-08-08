@@ -1,0 +1,22 @@
+doctype html
+head
+  title Books
+  link(href='../static/stylesheets/style.css' rel='stylesheet')
+h1 Books
+p
+  a.button(href='new_book.html') Create New Book
+table
+  thead
+    tr
+      th Title
+      th Author
+      th Genre
+      th Year
+  tbody
+    each book in booksData
+      tr
+        td
+          a(href='book_detail.html')= book.title
+        td= book.author
+        td= book.genre
+        td= book.year

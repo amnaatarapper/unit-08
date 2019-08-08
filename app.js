@@ -83,7 +83,7 @@ app.post('/books/new', async (req, res) => {
     }
   }
 
-  res.redirect('/books');
+  res.redirect('/books/' + book.id);
 
 
 });

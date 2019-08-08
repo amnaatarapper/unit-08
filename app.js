@@ -37,16 +37,18 @@ app.get('/', (req, res) => {
 // ALL BOOKS
 app.get('/books', async (req, res) => {
 
-  let booksData = [];
+  
   
 
   try {
+
+    let booksData = [];
     const books = await Book.findAll({})
     books.map( book => {
       booksData.push(book.toJSON())
     });
     // console.log( books.map(book => book.toJSON()));
-
+    res.render('all_books', { booksData });
 
   } catch(error) {
     if (error.name === 'SequelizeValidationError') {
@@ -57,7 +59,7 @@ app.get('/books', async (req, res) => {
     }
   }
 
-  res.render('all_books', { booksData });
+  
 });
 
 // NEW BOOK
@@ -67,12 +69,11 @@ app.get('/books/new', (req, res) => {
 
 // CREATE NEW BOOK
 app.post('/books/new', async (req, res) => {
-
+  
   try {
 
     const book = await Book.create(req.body);
-    bookById = book.toJSON();
-    res.redirect('/books');
+    res.redirect('/books/' + book.id);
 
   } catch(error) {
     if (error.name === 'SequelizeValidationError') {
@@ -83,7 +84,7 @@ app.post('/books/new', async (req, res) => {
     }
   }
 
-  res.redirect('/books/' + book.id);
+  
 
 
 });
@@ -92,11 +93,13 @@ app.post('/books/new', async (req, res) => {
 app.get('/books/:id', async (req, res) => {
 
   
-  const bookId = req.params.id;
-  let targetedBook;
-  let bookData = {};
+  
 
   try {
+    const bookId = req.params.id;
+    let targetedBook;
+    let bookData = {};
+
 
     const book = await Book.findByPk(bookId);
     targetedBook = book.toJSON();
@@ -108,6 +111,8 @@ app.get('/books/:id', async (req, res) => {
       year: targetedBook.year,
     };
     
+    res.render('book_detail', { bookData });
+
   } catch(error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map(err => err.message);
@@ -118,7 +123,7 @@ app.get('/books/:id', async (req, res) => {
   }
 
 
-  res.render('book_detail', { bookData });
+  
 
 });
 
@@ -126,13 +131,16 @@ app.get('/books/:id', async (req, res) => {
 app.post('/books/:id', async (req, res) => {
 
   
-  const bookId = req.params.id;
+  
 
 
   try {
+    const bookId = req.params.id;
 
     const book = await Book.findByPk(bookId);
     await book.update(req.body);
+
+    res.redirect(`/books/${book.id}`);
 
   } catch(error) {
     if (error.name === 'SequelizeValidationError') {
@@ -143,7 +151,7 @@ app.post('/books/:id', async (req, res) => {
     }
   }
 
-  res.redirect(`/books/${bookId}`);
+  
 });
 
 
@@ -152,13 +160,15 @@ app.post('/books/:id', async (req, res) => {
 app.post('/books/:id/delete', async (req, res) => {
 
   
-  const bookId = req.params.id;
+  
 
 
   try {
-
+    const bookId = req.params.id;
     const book = await Book.findByPk(bookId);
     await book.destroy();
+
+    res.redirect(`/books`);
 
   } catch(error) {
     if (error.name === 'SequelizeValidationError') {
@@ -169,7 +179,7 @@ app.post('/books/:id/delete', async (req, res) => {
     }
   }
 
-  res.redirect(`/books`);
+  
 });
 
 

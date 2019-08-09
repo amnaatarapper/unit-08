@@ -146,7 +146,7 @@ app.use((req, res, next) => {
   error.status = 404;
   next(error);
 });
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   
 
   res.status(err.status);

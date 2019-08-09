@@ -1,9 +1,10 @@
-doctype html
-head
+extends layout.pug
+
+block title
   title Page Not Found
-  link(rel='stylesheet' href='../static/stylesheets/style.css')
-h1 Page Not Found
-p Sorry! We couldn&apos;t find the page you were looking for.
-br
-p
-  a.button(href='/books') Home
+block content
+  h1 Page Not Found
+  p Sorry! We couldn&apos;t find the page you were looking for.
+  br
+  p
+    a.button(href='/books') Home

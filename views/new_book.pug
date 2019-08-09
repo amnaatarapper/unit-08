@@ -1,23 +1,24 @@
-doctype html
-head
+extends layout.pug
+
+block title
   title New Book
-  link(rel='stylesheet' href='../static/stylesheets/style.css')
-h1 New Book
-form(action='/books/new' method='POST' name="myForm" onsubmit="return validateForm()")
-  p
-    label(for='title') Title
-    input#title(name='title' type='text')
-  p
-    label(for='author') Author
-    input#author(name='author' type='text')
-  p
-    label(for='genre') Genre
-    input#genre(name='genre' type='text')
-  p
-    label(for='year') Year
-    input#year(name='year' type='text')
-  p
-    input(type='submit' value='Create New Book')
-  p
-    a.button(href='/books') Cancel
-script(src='/static/js/script.js')
+block content
+  h1 New Book
+  form(action='/books/new' method='POST' name="myForm" onsubmit="return validateForm()")
+    p
+      label(for='title') Title
+      input#title(name='title' type='text')
+    p
+      label(for='author') Author
+      input#author(name='author' type='text')
+    p
+      label(for='genre') Genre
+      input#genre(name='genre' type='text')
+    p
+      label(for='year') Year
+      input#year(name='year' type='text')
+    p
+      input(type='submit' value='Create New Book')
+    p
+      a.button(href='/books') Cancel
+  script(src='/static/js/script.js')

@@ -161,7 +161,11 @@ app.use((err, req, res, next) => {
 
 
 db.sequelize.sync().then(() => {
-  app.listen(3000, () => console.log("Running on port 3000"));
+
+  app.listen(process.env.PORT || 3000, () => {
+    console.log('server is up on localhost:3000')
+})
+
 });
 
 

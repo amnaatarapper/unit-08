@@ -5,10 +5,18 @@ head
 h1 New Book
 form(action='/books/new' method='POST')
   p
-    label(for='title') Title
+    if errorTitle
+      label(for='title')= `Title: ${errorTitle}`
+    else
+      label(for='title') Title
+
     input#title(name='title' type='text')
   p
-    label(for='author') Author
+    if errorAuthor
+      label(for='author')= `Author: ${errorAuthor}`
+    else
+      label(for='author') Author
+      
     input#author(name='author' type='text')
   p
     label(for='genre') Genre

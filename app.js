@@ -123,8 +123,6 @@ app.post('/books/:id', async (req, res) => {
       res.render('error');
       }
   }
-
-  
 });
 
 // DELETE BOOK
@@ -142,14 +140,12 @@ app.post('/books/:id/delete', async (req, res) => {
     }
 });
 
-// error handling middleware
+// 404 Route
 app.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
   next(error);
 });
-
-// code to execute in case express didnt find a matching get request
 app.use((err, req, res) => {
   
 

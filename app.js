@@ -35,10 +35,7 @@ app.get('/', (req, res) => {
 });
 
 // ALL BOOKS
-app.get('/books', async (req, res, next) => {
-
-  
-  
+app.get('/books', async (req, res) => {
 
   try {
 
@@ -51,16 +48,9 @@ app.get('/books', async (req, res, next) => {
     res.render('all_books', { booksData });
 
   } catch(error) {
-    if (error.name === 'SequelizeValidationError') {
-      const errors = error.errors.map(err => err.message);
-      console.error('Validation errors: ', errors);
-      next();
-    } else {
       res.render('error');
     }
-  }
 
-  
 });
 
 // NEW BOOK
@@ -68,7 +58,7 @@ app.get('/books/new', (req, res) => {
   res.render('new_book', {});
 });
 
-// CREATE NEW BOOK
+// CREATE NEW BOOK REQUIRE VALIDATION
 app.post('/books/new', async (req, res, next) => {
   
   try {
@@ -83,19 +73,12 @@ app.post('/books/new', async (req, res, next) => {
       next();
     } else {
       res.render('error');
-    }
+      }
   }
-
-  
-
-
 });
 
 // GET BOOK BY ID
-app.get('/books/:id', async (req, res, next) => {
-
-  
-  
+app.get('/books/:id', async (req, res) => {
 
   try {
     const bookId = req.params.id;
@@ -116,26 +99,12 @@ app.get('/books/:id', async (req, res, next) => {
     res.render('book_detail', { bookData });
 
   } catch(error) {
-    if (error.name === 'SequelizeValidationError') {
-      const errors = error.errors.map(err => err.message);
-      console.error('Validation errors: ', errors);
-      next();
-    } else {
       res.render('error');
     }
-  }
-
-
-  
-
 });
 
-// UPDATE BOOK DATA
-app.post('/books/:id', async (req, res, next) => {
-
-  
-  
-
+// UPDATE BOOK DATA REQUIRE VALIDATION
+app.post('/books/:id', async (req, res) => {
 
   try {
     const bookId = req.params.id;
@@ -152,20 +121,14 @@ app.post('/books/:id', async (req, res, next) => {
       next();
     } else {
       res.render('error');
-    }
+      }
   }
 
   
 });
 
-
-
 // DELETE BOOK
-app.post('/books/:id/delete', async (req, res, next) => {
-
-  
-  
-
+app.post('/books/:id/delete', async (req, res) => {
 
   try {
     const bookId = req.params.id;
@@ -175,31 +138,19 @@ app.post('/books/:id/delete', async (req, res, next) => {
     res.redirect(`/books`);
 
   } catch(error) {
-    if (error.name === 'SequelizeValidationError') {
-      const errors = error.errors.map(err => err.message);
-      console.error('Validation errors: ', errors);
-      next();
-    } else {
       res.render('error');
     }
-  }
-
-  
 });
-
-
-
-
 
 // error handling middleware
 app.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
   next(error);
-})
+});
 
 // code to execute in case express didnt find a matching get request
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   
 
   res.status(err.status);
@@ -210,13 +161,7 @@ app.use((err, req, res, next) => {
   errorMessage += "\nError stack: " + err.stack;
 
   console.log(errorMessage);
-})
-
-
-
-
-
-
+});
 
 
 db.sequelize.sync().then(() => {

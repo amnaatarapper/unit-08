@@ -63,10 +63,11 @@ app.get('/books', async (req, res) => {
 
 // NEW BOOK
 app.get('/books/new', (req, res) => {
-  res.render('new_book', {});
+  const bookData = {};
+  res.render('new_book', {bookData});
 });
 
-// CREATE NEW BOOK REQUIRE VALIDATION
+// CREATE NEW BOOK REQUIRE VALIDATION (FIXED AFTER FIRST REVIEW)
 app.post('/books/new', async (req, res, next) => {
 
   try {
@@ -78,7 +79,19 @@ app.post('/books/new', async (req, res, next) => {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map(err => err.message);
       console.error('Validation errors: ', errors);
-      next();
+
+      // FIXED HERE
+      
+      const bookData = {
+        id: req.params.id,
+        title: req.body.title,
+        author: req.body.author,
+        genre: req.body.genre,
+        year: req.body.year,
+      };
+
+      res.render('new_book', {bookData, errors})
+
     } else {
       res.render('error');
     }
@@ -112,7 +125,7 @@ app.get('/books/:id', async (req, res) => {
   }
 });
 
-// UPDATE BOOK DATA REQUIRE VALIDATION
+// UPDATE BOOK DATA REQUIRE VALIDATION (FIXED AFTER FIRST REVIEW)
 app.post('/books/:id', async (req, res) => {
 
   try {
@@ -126,7 +139,18 @@ app.post('/books/:id', async (req, res) => {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map(err => err.message);
       console.error('Validation errors: ', errors);
-      next();
+
+      // FIXED HERE
+      const bookData = {
+        id: req.params.id,
+        title: req.body.title,
+        author: req.body.author,
+        genre: req.body.genre,
+        year: req.body.year,
+      };
+
+      res.render('book_detail', {bookData, errors})
+      
     } else {
       res.render('error');
     }
@@ -170,7 +194,6 @@ app.use((err, req, res, next) => {
 
   console.log(errorMessage);
 });
-
 
 // SYNC THE DATABASE AND SERVE THE APP
 db.sequelize.sync().then(() => {
